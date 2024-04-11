@@ -56,7 +56,7 @@ export async function listAll() {
     }
 };
 
-export async function update( datas: TaskMap) {
+export async function update( datas: TaskMap): Promise<ResponseAPI> {
     try {
         const body = { title: datas.title, description: datas.description };
 

@@ -7,8 +7,8 @@ import { TaskMap } from "../../types/TaskMap";
 
 interface TableHomeProps {
     TaskMap: TaskMap[];
-    deleted: (id: string) => void;
-    edit: (idTask: string) => void;
+    deleted: (idTask: string | any) => void;
+    edit: (idTask: string | any) => void;
     editMode?: boolean;
 }
 

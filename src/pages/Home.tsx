@@ -1,5 +1,5 @@
 import React, { FormEvent, useState, useEffect } from "react";
-import { create, deleteT, listAll, update, updateRequest } from "../config/services/task.service";
+import { create, deleteT, listAll, update } from "../config/services/task.service";
 import TableHome from "../components/tableHome";
 import NavBar from "../components/NavBar";
 import Inputs from "../components/Inputs";
@@ -10,7 +10,8 @@ const Home: React.FC = () => {
     const [tasks, setTasks] = useState<TaskMap[]>([]);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [editMode, setEditMode] = useState<string>("")
+    const [editT, setEditT] = useState<TaskMap | null>(null)
+
 
     function clearInputs() {
         setTitle("");
@@ -25,11 +26,18 @@ const Home: React.FC = () => {
             return;
         };
 
-        await create({
-            title,
-            description
-        });
-
+        if (editT) {
+            await update({
+                idTask: editT.idTask,
+                title,
+                description
+            });
+        } else {
+            await create({
+                title,
+                description
+            });
+        }
         clearInputs();
         searchForData();
     };
@@ -56,11 +64,12 @@ const Home: React.FC = () => {
         searchForData();
     };
 
-    const edit = async ( datas: TaskMap) => {
+    const edit = async (datas: TaskMap) => {
+        setEditT(datas);
+
         const response = await update(datas);
 
-        if(response){
-            console.log(response.data.idTask)
+        if (response) {
             setTitle(response.data.title);
             setDescription(response.data.description);
         }
