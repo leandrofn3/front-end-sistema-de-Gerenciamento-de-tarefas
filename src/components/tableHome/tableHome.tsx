@@ -7,12 +7,10 @@ import { TaskMap } from "../../types/TaskMap";
 
 interface TableHomeProps {
     TaskMap: TaskMap[];
-    deleted: (idTask: string | any) => void;
-    edit: (idTask: string | any) => void;
-    editMode?: boolean;
+    deleted: (idTask: string ) => void;
 }
 
-const TableHome: React.FC<TableHomeProps> = ({ TaskMap, deleted, edit, editMode }) => {
+const TableHome: React.FC<TableHomeProps> = ({ TaskMap, deleted}) => {
     return (
         <React.Fragment>
             <TableContainer>
@@ -29,10 +27,10 @@ const TableHome: React.FC<TableHomeProps> = ({ TaskMap, deleted, edit, editMode 
                             <tr key={index}>
                                 <td>{item.title}</td>
                                 <td>{item.description}</td>
-                                <td> <Button variant="contained" endIcon={<SendIcon />} color="success" size="small" onClick={()=> edit(item.idTask)}>
+                                <td> <Button variant="contained" endIcon={<SendIcon />} color="success" size="small">
                                     Editar
                                 </Button>
-                                    <Button variant="contained" startIcon={<DeleteIcon />} color="error" size="small" onClick={()=> deleted(item.idTask)} disabled={editMode}>
+                                    <Button variant="contained" startIcon={<DeleteIcon />} color="error" size="small" onClick={()=> deleted(item.idTask)} >
                                         Deletar
                                     </Button>
                                 </td>

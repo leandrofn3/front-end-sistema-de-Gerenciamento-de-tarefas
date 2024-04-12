@@ -1,5 +1,5 @@
 export interface TaskMap  {
-    idTask?: string; 
+    idTask: string; 
     title: string;
     description: string;
 }

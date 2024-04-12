@@ -10,7 +10,6 @@ const Home: React.FC = () => {
     const [tasks, setTasks] = useState<TaskMap[]>([]);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [editT, setEditT] = useState<TaskMap | null>(null)
 
 
     function clearInputs() {
@@ -26,18 +25,11 @@ const Home: React.FC = () => {
             return;
         };
 
-        if (editT) {
-            await update({
-                idTask: editT.idTask,
-                title,
-                description
-            });
-        } else {
             await create({
                 title,
                 description
             });
-        }
+
         clearInputs();
         searchForData();
     };
@@ -64,16 +56,6 @@ const Home: React.FC = () => {
         searchForData();
     };
 
-    const edit = async (datas: TaskMap) => {
-        setEditT(datas);
-
-        const response = await update(datas);
-
-        if (response) {
-            setTitle(response.data.title);
-            setDescription(response.data.description);
-        }
-    }
     useEffect(() => {
         searchForData();
     }, []);
@@ -86,7 +68,7 @@ const Home: React.FC = () => {
                 setTitle={setTitle}
                 setDescription={setDescription}
             />
-            <TableHome TaskMap={tasks} deleted={deleteTask} edit={edit} />
+            <TableHome TaskMap={tasks} deleted={deleteTask} />
         </ContainerHome>
     );
 };
